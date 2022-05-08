@@ -2,6 +2,7 @@ let canvas;
 var pg, click;
 let osc, fft;
 
+
 var oscs = []
 
 
@@ -35,10 +36,10 @@ function setup(){
     click.textAlign(CENTER, CENTER);
     click.fill(90);
     if(width < height)
-        click.textSize(130);
+        click.textSize(50);
     else
         click.textSize(200);
-    click.text('Click', width/2, height/2);
+    click.text('NOT WORKING\nON MOBILE', width/2, height/2);
 
     pg.colorMode(HSB, 100);
 
@@ -47,6 +48,11 @@ function setup(){
 var mx, my;
 
 function draw(){
+
+    if(width < height){
+        shaderOnCanvas(click);
+        return;
+    }
 
     mx = mouseX-width/2;
     my = mouseY-height/2;
