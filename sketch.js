@@ -36,7 +36,7 @@ function setup(){
     click.textAlign(CENTER, CENTER);
     click.fill(90);
     if(width < height)
-        click.textSize(50);
+        click.textSize(40);
     else
         click.textSize(200);
     click.text('NOT WORKING\nON MOBILE', width/2, height/2);
@@ -224,6 +224,9 @@ var vels = [];
 var isdrawing = false;
 
 function handleMoved(){
+    if(width < height){
+        return;
+    }
 
     if(!isdrawing){
     }
@@ -238,6 +241,9 @@ function handleMoved(){
 }
 
 function handleStart(){
+    if(width < height){
+        return;
+    }
     oscs.push(new p5.TriOsc());
     oscs[oscs.length-1].amp(0.3);
 
@@ -273,6 +279,9 @@ function handleStart(){
 }
 
 function handleEnd(){
+    if(width < height){
+        return;
+    }
 
     isdrawing = false;
 
