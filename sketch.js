@@ -227,6 +227,44 @@ function handleMoved(){
     if(width < height){
         return;
     }
+    if(width < height){
+        return;
+    }
+    
+
+    if(!isdrawing){
+        isdrawing = true;
+        if(shapes.length == 5){
+            shapes.shift();
+            oscs[0].stop();
+            oscs.shift();
+        }
+        oscs.push(new p5.TriOsc());
+        oscs[oscs.length-1].amp(0.3);
+
+        var lastvy = 200+(mouseY-height/2)/height*500;
+        oscs[oscs.length-1].freq(440 - lastvy);
+        oscs[oscs.length-1].start();
+    
+        shapes.push([]);
+        vels.push([]);
+        if(shapes.length > 0){
+            for(var s = 0; s < shapes.length; s++){
+                var amp = map(s, 0, shapes.length-1, 0, 1);
+                if(shapes.length == 1){
+                    amp = .3;
+                }
+                else{
+                    amp = pow(amp, .5);
+                    amp = map(amp, 0, 1, 0.05, .2);
+                    amp = 0.3;
+                }
+                oscs[s].amp(amp);
+            }
+        }
+    }
+
+
 
     if(!isdrawing){
     }
@@ -241,41 +279,7 @@ function handleMoved(){
 }
 
 function handleStart(){
-    if(width < height){
-        return;
-    }
-    oscs.push(new p5.TriOsc());
-    oscs[oscs.length-1].amp(0.3);
-
-    var lastvy = 200+(mouseY-height/2)/height*500;
-    oscs[oscs.length-1].freq(440 - lastvy);
-    oscs[oscs.length-1].start();
-
-    if(!isdrawing){
-        isdrawing = true;
-        if(shapes.length == 5){
-            shapes.shift();
-            oscs[0].stop();
-            oscs.shift();
-        }
-        shapes.push([]);
-        vels.push([]);
-    }
-
-    if(shapes.length > 0){
-        for(var s = 0; s < shapes.length; s++){
-            var amp = map(s, 0, shapes.length-1, 0, 1);
-            if(shapes.length == 1){
-                amp = .3;
-            }
-            else{
-                amp = pow(amp, .5);
-                amp = map(amp, 0, 1, 0.05, .2);
-                amp = 0.3;
-            }
-            oscs[s].amp(amp);
-        }
-    }
+    
 }
 
 function handleEnd(){
@@ -285,13 +289,6 @@ function handleEnd(){
 
     isdrawing = false;
 
-    var ver0 = vels[vels.length-1][0];
-    for(var i = 0; i < vels[vels.length-1].length; i++){
-        var x = vels[vels.length-1][0];
-        var y = vels[vels.length-1][1];
-        vels[vels.length-1][0] = x;
-        vels[vels.length-1][0] = y;
-    }
 }
 
 function touchStarted() {
