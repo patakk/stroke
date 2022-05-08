@@ -57,7 +57,7 @@ vec4 blur(float amp){
     //the amount to blur, i.e. how far off center to sample from 
     //1.0 -> blur by one pixel
     //2.0 -> blur by two pixels, etc.
-    float radius = (.5+.5*grunge2)*amp;
+    float radius = .6*amp;
     vec2 blur = radius*texelSize; 
     
     //the direction of our blur
@@ -159,9 +159,9 @@ vec4 salt(){
 void main() {
 	vec4 n = salt();
 	vec4 d = distort();
-	vec4 b = blur(3.);
+	vec4 b = blur(1.);
 
-	vec4 res = d + (b-d)*pow(.4 + .1*frq4, 1.4) + n*.08;
+	vec4 res = d + (b-d)*pow(.9 + .1*frq4, 1.0) + n*.08;
 
 	res.r = abs(res.r);
 	if(res.r > 1.0)
@@ -177,8 +177,8 @@ void main() {
 	res.b *= 1. - (.062*frq5);
 
 	res.rgb *= 0.9; //(0.8 + 0.2*frq6);
-	//res.rgb = 1. - res.rgb;
+	res.rgb = 1. - res.rgb;
 
-	gl_FragColor = res;
+	gl_FragColor = b;
 	//gl_FragColor = blur();
 }
